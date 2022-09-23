@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Stack;
 
 public class Deck
 {
@@ -46,8 +47,11 @@ public class Deck
         }
     }
 
-    public Card getCard(int next_card)
+    public void new_deck(Stack<Card> playing_deck)
     {
-        return deck[next_card];
+        for (int i = 0; i <= deck.length; i++)
+        {
+            playing_deck.push(deck[i]);
+        }
     }
 }
