@@ -3,7 +3,7 @@ import java.util.Stack;
 
 public class Deck
 {
-    Card[] deck = new Card[52];
+   private Card[] deck = new Card[52];
 
  public Deck()
     {
@@ -37,7 +37,7 @@ public class Deck
         int new_spot;
         for (int i = 0; i < 5; i++)
         {
-            for (int j = 0; j < 51; j++)
+            for (int j = 0; j < 52; j++)
             {
                 temp = deck[j];
                 new_spot = ran.nextInt(52);
@@ -49,7 +49,7 @@ public class Deck
 
     public void new_deck(Stack<Card> playing_deck)
     {
-        for (int i = 0; i <= deck.length; i++)
+        for (int i = 0; i < 52; i++)
         {
             playing_deck.push(deck[i]);
         }

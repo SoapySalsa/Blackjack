@@ -1,8 +1,8 @@
 public class Card
 {
-    int value;
-    String suit;
-    Card(int value, String Suit)
+    private int value;
+    private String suit;
+    Card(int value, String suit)
     {
         this.value = value;
         this.suit = suit;
