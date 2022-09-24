@@ -43,6 +43,22 @@ public class Card
         return face_value.substring(0,1).toUpperCase();
     }
 
+    public static int ace_check(int card_number, Card hand[], int total)
+    {
+        int ace_value = 1;
+        for (int i = card_number + 1; i <= hand.length; i++)
+            if (total < 11 && i == hand.length)
+            {
+                ace_value = 11;
+                return ace_value;
+            }
+            else if (total >= 11 && i < hand.length)
+            {
+                ace_value = 1;
+            }
+        return ace_value;
+    }
+
 //    public boolean compare_value()
 //    {
 //

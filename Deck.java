@@ -3,30 +3,27 @@ import java.util.Stack;
 
 public class Deck
 {
-   private Card[] deck = new Card[52];
+    private Card[] deck = new Card[52];
+    private Stack<Card> playing_deck;
 
- public Deck()
+    public Deck()
     {
         int placement = 0;
         for (int i = 1; i < 14; i++)
         {
-            deck[placement] = new Card(i, "of Spades");
-            placement++;
+            deck[placement++] = new Card(i, "of Spades");
         }
         for (int i = 1; i < 14; i++)
         {
-            deck[placement] = new Card(i, "of Diamonds");
-            placement++;
+            deck[placement++] = new Card(i, "of Diamonds");
         }
         for (int i = 1; i < 14; i++)
         {
-            deck[placement] = new Card(i, "of Hearts");
-            placement++;
+            deck[placement++] = new Card(i, "of Hearts");
         }
         for (int i = 1; i < 14; i++)
         {
-            deck[placement] = new Card(i, "of Clubs");
-            placement++;
+            deck[placement++] = new Card(i, "of Clubs");
         }
     }
 
@@ -47,11 +44,24 @@ public class Deck
         }
     }
 
-    public void new_deck(Stack<Card> playing_deck)
+    public Stack new_deck()
     {
         for (int i = 0; i < 52; i++)
         {
             playing_deck.push(deck[i]);
         }
+        return playing_deck;
     }
+
+    public Stack<Card> get_deck()
+    {
+        return playing_deck;
+    }
+
+    public Card get_card()
+    {
+        Card next_card = playing_deck.pop();
+        return next_card;
+    }
+
 }
