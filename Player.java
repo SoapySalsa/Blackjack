@@ -4,21 +4,22 @@ public class Player
     private int bank;
     private int bet;
 
-    Player(String name, int bank, int bet)
+    Player()
     {
-        this.name = name;
-        this.bank = 150;
+        bank = 150;
         Hand hand = new Hand();
     }
-//    public void add_players(String name)
-//    {
-//        player[] = new Player(name, 150, 0);
-//    }
 
+    public void set_name(String name)
+    {
+        name = name;
+    }
 
-//    public void set_name(String name)
-//    {
-//    }
+    public String get_name()
+    {
+        return name;
+    }
+
 
 //    public void set_bet(int bet)
 //    {

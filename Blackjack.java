@@ -3,6 +3,8 @@ import java.util.Scanner;
 public class Blackjack
 {
     private Player[] players;
+    private int users;
+    private String name;
     private Deck deck;
     private Scanner scan = new Scanner(System.in);
 
@@ -32,9 +34,31 @@ public class Blackjack
                 "can not place a bet they are out of the game.");
         System.out.println("");
         System.out.println("The game continues until all players are removed or they decided to quit");
+        System.out.println("");
 
+        System.out.println("How many people are playing today? (1-6)");
+        while(users == 0 || users > 6)
+        {
+            if (scan.hasNextInt())
+            {
+                users = scan.nextInt();
+            }
+            else
+            {
+                System.out.println("Please enter a valid number (1-6)");
+            }
 
+        }
+        players = new Player[users];
+        deck = new Deck();
 
+        for (int i = 0; i <= users; i++)
+        {
+            System.out.println("Please enter your name");
+            players[i].set_name(scan.next());
+        }
+
+        
     }
 
 
