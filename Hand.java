@@ -1,9 +1,8 @@
-import java.util.Stack;
-
 public class Hand
 {
     private Card[] hand = new Card[12];
     private int hand_count;
+    Card current_hand;
 
     public int calc_total()
     {
@@ -32,5 +31,28 @@ public class Hand
     {
         hand[hand_count++] = card;
     }
+    public boolean blackjack_check(Hand hand, int total)
+    {
+        boolean blackjack_flag = true;
+        if (total != 21)
+        {
+            blackjack_flag = false;
+        }
+        return blackjack_flag;
+    }
+
+//    public int dealer_peek()
+//    {
+//        return hand[0].get_value();
+//    }
+
+//    public void show_cards()
+//    {
+//        Card current_hand;
+//        for (int i = 0; i <= hand.length; i++)
+//        {
+//            hand[i].get_card_details();
+//        }
+//    }
 
 }

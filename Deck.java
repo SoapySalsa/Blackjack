@@ -1,10 +1,12 @@
+import java.util.ArrayDeque;
 import java.util.Random;
 import java.util.Stack;
 
 public class Deck
 {
     private Card[] deck = new Card[52];
-    private Stack<Card> playing_deck;
+    public static Stack<Card> playing_deck;
+    //private Stack<Card> playing_deck;
 
     public Deck()
     {
@@ -53,15 +55,13 @@ public class Deck
         return playing_deck;
     }
 
-    public Stack<Card> get_deck()
-    {
-        return playing_deck;
-    }
-
-    public Card get_card()
-    {
-        Card next_card = playing_deck.pop();
-        return next_card;
-    }
-
+//    public Stack<Card> get_deck()
+//    {
+//        return playing_deck;
+//    }
+//
+//    public Card get_card()
+//    {
+//        return playing_deck.pop();
+//    }
 }

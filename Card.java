@@ -2,43 +2,47 @@ public class Card
 {
     private int num_value;
     private String face_value;
-    private String suit;
+    private final String suit;
     Card(int value, String suit)
     {
         this.num_value = value;
         this.suit = suit;
     }
 
-    public String get_suit()
-    {
-        return this.suit;
-    }
+//    public String get_suit()
+//    {
+//        return this.suit;
+//    }
 
+    public String toString()
+    {
+        return this.get_value() + " " + this.suit;
+    }
     public int get_value()
     {
         return this.num_value;
     }
-    public String get_face_value()
+    public String get_card_details()
     {
-        if (this.value <= 10)
+        if (this.num_value <= 10)
         {
-            face_value = this.value.toString();
+            face_value = this.toString();
         }
-        if (this.value == 1)
+        if (this.num_value == 1)
         {
-            face_value = "Ace";
+            face_value = "Ace " + this.suit;
         }
-        if (this.value == 11)
+        if (this.num_value == 11)
         {
-            face_value = "Jack";
+            face_value = "Jack" + this.suit;
         }
-        if (this.value == 12)
+        if (this.num_value == 12)
         {
-            face_value = "Queen";
+            face_value = "Queen" + this.suit;
         }
-        if (this.value == 13)
+        if (this.num_value == 13)
         {
-            face_value = "King";
+            face_value = "King" + this.suit;
         }
         return face_value.substring(0,1).toUpperCase();
     }

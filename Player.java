@@ -1,32 +1,28 @@
 public class Player
 {
-    private Player[] player;
     private String name;
     private int bank;
     private int bet;
-    private Hand hand;
 
     Player(String name, int bank, int bet)
     {
         this.name = name;
-        this.bank = bank;
+        this.bank = 150;
+        Hand hand = new Hand();
     }
-    public void add_players(int num_players, String name, int bet)
-    {
-        for (int i = 0; i <= num_players; i++)
-        {
-            player[i] = new Player(name, 200, bet);
-        }
-    }
-
-//    public void clear_bet(int num_players)
+//    public void add_players(String name)
 //    {
-//        for (int i = 0; i <= num_players; i++)
-//        {
-//            player[i].bet = 0;
-//        }
+//        player[] = new Player(name, 150, 0);
 //    }
 
+
+//    public void set_name(String name)
+//    {
+//    }
+
+//    public void set_bet(int bet)
+//    {
+//    }
     public void player_win()
     {
         bank += bet;
@@ -50,15 +46,13 @@ public class Player
         bet = 0;
     }
 
+    public void clear_bet()
+    {
+        bet = 0;
+    }
+
     public void remove_player()
     {
         bank = -1;
     }
-
-    public void add_card()
-    {
-
-    }
-
-
 }
