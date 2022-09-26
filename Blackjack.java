@@ -1,5 +1,6 @@
 import javax.sound.midi.SysexMessage;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Blackjack
 {
@@ -44,9 +45,11 @@ public class Blackjack
             if (scan.hasNextInt())
             {
                 users = scan.nextInt();
-            } else
+            }
+            else
             {
                 System.out.println("Please enter a valid number (1-6)");
+                users = scan.nextInt();
             }
 
         }
@@ -55,15 +58,17 @@ public class Blackjack
         for (int i = 0; i < users; i++)
         {
             System.out.println("Please enter your name");
-            players[i].set_name(scan.next());
+            players[i].set_name(scan.nextLine());
         }
         deck = new Deck();
     }
 
-    public void shuffle()
+    public Stack dealer_deck()
     {
         deck.shuffle();
+        return deck.new_deck();
     }
+
 
     public void collect_bets()
     {
