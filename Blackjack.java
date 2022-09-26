@@ -1,4 +1,3 @@
-import javax.sound.midi.SysexMessage;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -11,7 +10,6 @@ public class Blackjack
     private int player_blackjack;
     private String dealer_status;
     private String name;
-    private Deck deck;
     private Scanner scan = new Scanner(System.in);
 
     public void create_game()
@@ -72,7 +70,7 @@ public class Blackjack
 
     public Stack dealer_deck()
     {
-        deck = new Deck();
+        Deck deck = new Deck();
         return deck.new_deck(deck.shuffle());
     }
 
@@ -155,13 +153,16 @@ public class Blackjack
                 {
                     System.out.println(players[i].get_name() + " gets their bet back due to a tie with the Dealer.");
                     players[i].blackjack_tie();
-                } else if (dealer.dealer_blackjack_check())
+                }
+                else
                 {
                     System.out.println(players[i].get_name() + " does not have Blackjack and loses.");
                     players[i].player_bust();
+                    bust_count ++;
                 }
             }
-        } else
+        }
+        else
         {
             System.out.println("The dealer peeks and does not have blackjack.");
             System.out.println("");
@@ -184,7 +185,7 @@ public class Blackjack
                     if (action.equals("hit"))
                     {
                         players[i].add_card();
-                        System.out.println(players[i].get_name() + " has " + players[i].show_hand() + "for a total of " + players[i].hand.calc_total() + ".");
+                        System.out.println(players[i].get_name() + " has " + players[i].show_hand() + " for a total of " + players[i].hand.calc_total() + ".");
                         System.out.println("");
 
                         while (action.equals("hit"))
@@ -206,7 +207,7 @@ public class Blackjack
                                 if (!action.equals("stand"))
                                 {
                                     players[i].add_card();
-                                    System.out.println(players[i].get_name() + " has " + players[i].show_hand() + "for a total of " + players[i].hand.calc_total() + ".");
+                                    System.out.println(players[i].get_name() + " has " + players[i].show_hand() + " for a total of " + players[i].hand.calc_total() + ".");
                                     System.out.println("");
                                 }
                                 else
@@ -234,15 +235,14 @@ public class Blackjack
         return bust_count;
     }
 
-    public String dealer_action()
+    public void dealer_action()
     {
         if (bust_count < users && player_blackjack < users)
         {
             System.out.println("The dealer is currently showing " + dealer.dealer_hand());
             dealer_status = dealer.dealer_turn();
-
+            return;
         }
-
         if (player_blackjack == users)
         {
             dealer_status = "lose";
@@ -251,7 +251,6 @@ public class Blackjack
         {
             dealer_status = "win";
         }
-        return dealer_status;
     }
 
     public void showdown()
@@ -324,6 +323,7 @@ public class Blackjack
                 if (players[i].get_bank() - start_bank > 0)
                 {
                     balance = players[i].get_bank() - start_bank;
+                    System.out.println("");
                     System.out.println("So far " + players[i].get_name() + " has gained " + balance + " for a total of " + players[i].get_bank() + ".");
                    //players[i].set_bank(balance);
                     System.out.println("");
@@ -332,6 +332,7 @@ public class Blackjack
                 if (players[i].get_bank() - start_bank < 0)
                 {
                     balance = start_bank - players[i].get_bank();
+                    System.out.println("");
                     System.out.println("so far " + players[i].get_name() + " has lost " + balance + " with a remainder of " + players[i].get_bank() + ".");
                     //players[i].set_bank(balance);
                     System.out.println("");
@@ -340,13 +341,15 @@ public class Blackjack
             }
             if (players[i].get_bank() == 0)
             {
-                System.out.println("So far " + players[i].get_name() + " has a bank of 0 and is removed from the game.");
+                System.out.println("");
+                System.out.println(players[i].get_name() + " has a bank of 0 and is removed from the game.");
                 System.out.println("");
                 players[i].hand.hand_reset();
                 players[i].remove_player();
             }
             if (players[i].get_bank() == start_bank)
             {
+                System.out.println("");
                 System.out.println(players[i].get_name() + " has broke even with a bank of " + players[i].get_bank() + ".");
                 players[i].hand.hand_reset();
                 System.out.println("");
@@ -418,28 +421,32 @@ public class Blackjack
                 if (players[i].get_bank() - start_bank > 0)
                 {
                     balance = players[i].get_bank() - start_bank;
+                    System.out.println("");
                     System.out.println(players[i].get_name() + " ends the game with with winning " + balance + " for a total of " + players[i].get_bank() + ".");
                     System.out.println("");
                 }
-                if (start_bank - players[i].get_bank() < 0)
+                if (players[i].get_bank() - start_bank  < 0)
                 {
                     balance = start_bank - players[i].get_bank();
+                    System.out.println("");
                     System.out.println(players[i].get_name() + " ends the game losing " + balance + " with a remainder of " + players[i].get_bank() + ".");
                     System.out.println("");
                 }
             }
             if (players[i].get_bank() <= 0)
             {
+                System.out.println("");
                 System.out.println(players[i].get_name() + " ended the game with a bank of 0.");
                 System.out.println("");
                 players[i].reset_bank();
-            } else
+            }
+            if (players[i].get_bet() == 150)
             {
+                System.out.println("");
                 System.out.println(players[i].get_name() + " ends the game by breaking even with a bank of " + players[i].get_bank() + ".");
                 System.out.println("");
             }
         }
-        System.out.println("");
         System.out.println("Thank you for playing.");
     }
 
