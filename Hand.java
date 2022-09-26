@@ -6,18 +6,26 @@ public class Hand
 
     public int calc_total()
     {
+        int card_value = 0;
         int total = 0;
         int temp_total = 0;
         for (int i = 0; i < hand_count; i++)
         {
-            int card_value = hand[i].get_value();
-            if (card_value > 10)
+            if (hand[i].get_value() <= 10)
+            {
+                card_value = hand[i].get_value();
+            }
+            if (hand[i].get_value() > 10)
             {
                 card_value = 10;
             }
-            else if (card_value == 1 && i < hand_count)
+            if (hand[i].get_value() == 1 && hand_count == 2)
             {
-                temp_total += 11 + total;
+                card_value = 11;
+            }
+            if (hand[i].get_value() == 1 && hand_count > 2)
+            {
+                temp_total = 11;
                 //card_value = Card.ace_check(hand);
                 for (int j = i + 1; j < hand_count; j++)
                 {
@@ -25,6 +33,9 @@ public class Hand
                     if (temp_total <= 21 && j == hand_count)
                     {
                         card_value = 11;
+                    } else
+                    {
+                        card_value = 1;
                     }
                 }
             }
@@ -32,11 +43,6 @@ public class Hand
         }
         return total;
     }
-
-//    public String get_card()
-//    {
-//        return hand[i].get_card_details();
-//    }
 
     public String toString()
     {
@@ -56,28 +62,4 @@ public class Hand
     {
         hand[hand_count++] = card;
     }
-    public boolean blackjack_check(Hand hand, int total)
-    {
-        boolean blackjack_flag = true;
-        if (total != 21)
-        {
-            blackjack_flag = false;
-        }
-        return blackjack_flag;
-    }
-
-//    public int dealer_peek()
-//    {
-//        return hand[0].get_value();
-//    }
-
-//    public void show_cards()
-//    {
-//        Card current_hand;
-//        for (int i = 0; i <= hand.length; i++)
-//        {
-//            hand[i].get_card_details();
-//        }
-//    }
-
 }

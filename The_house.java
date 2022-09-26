@@ -17,20 +17,27 @@ public class The_house
     public String dealer_turn()
     {
         String status = "stand";
-        while (hand.calc_total() <= 16)
+        if (hand.calc_total() <= 16)
         {
-            hand.add_card(Deck.playing_deck.pop());
-            System.out.println("The Dealer draws a card and has a hand of " + hand.toString() + ".");
+            while (hand.calc_total() < 17)
+            {
+                hand.add_card(Deck.playing_deck.pop());
+                System.out.println("The Dealer draws a card and has a hand of " + hand.toString() + " with a total of " + hand.calc_total() + ".");
 
-            if (hand.calc_total() > 17)
-            {
-                System.out.println("The Dealer stands with a hand of " + hand.toString() + ".");
+                if (hand.calc_total() == 17)
+                {
+                    System.out.println("The Dealer stands with a hand of " + hand.toString() + " with a total of " + hand.calc_total() + ".");
+                }
+                else if (hand.calc_total() > 21)
+                {
+                    System.out.println("The dealer busts with a with a total of " + hand.calc_total() + ".");
+                    status = "bust";
+                }
             }
-            else if (hand.calc_total() > 21)
-            {
-                System.out.println("The dealer busts with a " + hand.calc_total()+ ".");
-                status = "bust";
-            }
+        }
+        if (hand.calc_total() > 17 && hand.calc_total() < 22)
+        {
+            System.out.println("The Dealer stands with a hand of " + hand.toString() + " with a total of " + hand.calc_total() + ".");
         }
         return status;
     }

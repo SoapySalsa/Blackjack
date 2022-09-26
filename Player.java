@@ -26,6 +26,11 @@ public class Player
         return bank;
     }
 
+    public void set_bank(int new_bank)
+    {
+        bank += new_bank;
+    }
+
     public void set_bet(int new_bet)
     {
         bet = new_bet;
@@ -81,10 +86,11 @@ public class Player
         bet = 0;
     }
 
-//    public void clear_bet()
-//    {
-//        bet = 0;
-//    }
+    public void blackjack_tie()
+    {
+        bank += bet;
+        bet = 0;
+    }
 
     public void remove_player()
     {
@@ -95,10 +101,5 @@ public class Player
     {
         bank = 150;
     }
-
-//    public void clear_hand()
-//    {
-//        hand.hand_reset();
-//    }
 
 }

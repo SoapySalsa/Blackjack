@@ -54,15 +54,4 @@ public class Deck
         return playing_deck;
     }
 
-//    public String toString()
-//    {
-//        String card = "";
-//        card = playing_deck.peek().get_card_details();
-//        return card;
-//    }
-
-//    public Card get_card()
-//    {
-//        return playing_deck.pop();
-//    }
 }

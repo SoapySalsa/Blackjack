@@ -7,6 +7,9 @@ public class Blackjack
     The_house dealer = new The_house();
     private Player[] players;
     private int users;
+    private int bust_count;
+    private int player_blackjack;
+    private String dealer_status;
     private String name;
     private Deck deck;
     private Scanner scan = new Scanner(System.in);
@@ -17,9 +20,9 @@ public class Blackjack
         System.out.println("Welcome to Blackjack.");
         System.out.println("");
         System.out.println("First we will go over the rules.");
-        System.out.println("Each player is dealt two cards including the Dealer who has one face up and the other face down.");
+        System.out.println("Each player is dealt two cards face up while the Dealer has one face up and the other face down.");
         System.out.println("Each card has a value with the cards 2-10 having a value equal to the number shown.");
-        System.out.println("jacks, Queens, and Kings are all worth 10 and Ace's having a value of either 1 or 11.");
+        System.out.println("jacks, Queens, and Kings are all worth 10 and Ace's have a value of either 1 or 11.");
         System.out.println("The object of the game is to have a score of 21 or as close as possible without going over.");
         System.out.println("If the player or Dealer goes over they will bust and lose the round.");
         System.out.println("Each player is trying to have a hand that is higher than the Dealer.");
@@ -48,10 +51,8 @@ public class Blackjack
                 if (users < 0 || users > 6)
                 {
                     System.out.println("Please enter a valid number (1-6)");
-                } else
-                {
-                    System.out.println("Please enter a valid number (1-6)");
                 }
+
             } catch (Exception Input)
             {
                 System.out.println("Please enter a number between 1 and 6");
@@ -81,10 +82,9 @@ public class Blackjack
         int bet_amount = 0;
         for (int i = 0; i < users; i++)
         {
-            if (players[i].get_bank() > 0)
+            if (players[i].get_bank() > 0 && players[i].get_bet() == 0)
             {
                 System.out.println("How much do you want to bet " + players[i].get_name());
-                //bet_amount = scan.nextInt();
 
                 while (bet_amount == 0 || bet_amount > players[i].get_bank())
                 {
@@ -106,6 +106,7 @@ public class Blackjack
                     }
                 }
                 bet_amount = 0;
+                System.out.println("");
             }
         }
     }
@@ -124,6 +125,7 @@ public class Blackjack
             if (i == 1)
             {
                 System.out.println("The dealer is showing a " + dealer.hand.toString().substring(dealer.hand.toString().lastIndexOf(",") + 1));
+                System.out.println("");
                 dealer.add_card();
             } else
             {
@@ -132,16 +134,27 @@ public class Blackjack
         }
     }
 
-    public void blackjack_check()
+    public int blackjack_check()
     {
+        player_blackjack = 0;
+        for (int i = 0; i < users; i++)
+        {
+            if (players[i].player_blackjack_check())
+            {
+                System.out.println(players[i].get_name() + " has Blackjack with " + players[i].hand.toString() + ".");
+                System.out.println("");
+                players[i].player_blackjack();
+                player_blackjack ++;
+            }
+        }
         if (dealer.dealer_blackjack_check())
         {
             for (int i = 0; i < users; i++)
             {
                 if (players[i].player_blackjack_check())
                 {
-                    System.out.println(players[i].get_name() + "pushes.");
-                    players[i].player_push();
+                    System.out.println(players[i].get_name() + " gets their bet back due to a tie with the Dealer.");
+                    players[i].blackjack_tie();
                 } else if (dealer.dealer_blackjack_check())
                 {
                     System.out.println(players[i].get_name() + " does not have Blackjack and loses.");
@@ -151,22 +164,14 @@ public class Blackjack
         } else
         {
             System.out.println("The dealer peeks and does not have blackjack.");
+            System.out.println("");
         }
-
-        for (int i = 0; i < users; i++)
-        {
-            if (players[i].player_blackjack_check())
-            {
-                System.out.println(players[i].get_name() + "has Blackjack with " + players[i].hand.toString() + ".");
-                players[i].player_blackjack();
-            }
-        }
+        return player_blackjack;
     }
 
     public int player_action()
     {
-        String action;
-        int bust_count = 0;
+        String action = "";
         for (int i = 0; i < users; i++)
         {
             if (players[i].get_bank() > 0 && players[i].get_bet() > 0)
@@ -175,40 +180,51 @@ public class Blackjack
                 System.out.println(players[i].get_name() + " do you want to hit or stand?");
                 try
                 {
-                    action = scan.nextLine().toLowerCase();
+                    action = scan.next().toLowerCase();
                     if (action.equals("hit"))
                     {
-                        while (!(action.equals("stand")))
-                        {
-                            players[i].add_card();
-                            System.out.println(players[i].get_name() + " has " + players[i].show_hand());
+                        players[i].add_card();
+                        System.out.println(players[i].get_name() + " has " + players[i].show_hand() + "for a total of " + players[i].hand.calc_total() + ".");
+                        System.out.println("");
 
+                        while (action.equals("hit"))
+                        {
+                            scan.reset();
                             if (players[i].hand.calc_total() > 21)
                             {
                                 System.out.println(players[i].get_name() + " has busted with " + players[i].hand.calc_total());
+                                System.out.println("");
                                 players[i].player_bust();
                                 bust_count++;
                                 break;
-                            } else
+                            }
+                            else
                             {
                                 System.out.println(players[i].get_name() + " do you want to hit or stand?");
-                                scan.reset();
-                                action = scan.nextLine().toLowerCase();
+                                action = scan.next().toLowerCase();
+
+                                if (!action.equals("stand"))
+                                {
+                                    players[i].add_card();
+                                    System.out.println(players[i].get_name() + " has " + players[i].show_hand() + "for a total of " + players[i].hand.calc_total() + ".");
+                                    System.out.println("");
+                                }
+                                else
+                                {
+                                    break;
+                                }
                             }
+
                         }
                     }
-                    if (action.equals("stands"))
+                    if (action.equals("stand"))
                     {
                         System.out.println(players[i].get_name() + " stands " + players[i].show_hand() + " for a total of " + players[i].hand.calc_total());
-                    } else
-                    {
-                        while (!(action.equals("hit") || action.equals("stand")))
-                        {
-                            System.out.println("Please enter a valid response, 'hit' or 'stand'");
-                            action = scan.nextLine();
-                        }
+                        System.out.println("");
+                        scan.reset();
                     }
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     System.out.println("Error. Please enter a valid response");
                     scan.nextLine();
@@ -220,8 +236,7 @@ public class Blackjack
 
     public String dealer_action()
     {
-        String dealer_status;
-        if (player_action() > 0)
+        if (bust_count < users && player_blackjack < users)
         {
             System.out.println("The dealer is currently showing " + dealer.dealer_hand());
             dealer_status = dealer.dealer_turn();
@@ -233,8 +248,9 @@ public class Blackjack
         return dealer_status;
     }
 
-    public void showdown(String status)
+    public void showdown()
     {
+        String status = dealer_status;
         if (status.equals("stand"))
         {
             for (int i = 0; i < users; i++)
@@ -243,13 +259,15 @@ public class Blackjack
                 {
                     if (players[i].hand.calc_total() > dealer.hand.calc_total())
                     {
-                        System.out.println(players[i].get_name() + " has won against the house.");
+                        System.out.println(players[i].get_name() + " has won against the house for a payout of " + players[i].get_bet() + ".");
                         players[i].player_win();
-                    } else if (players[i].hand.calc_total() == dealer.hand.calc_total())
+                    }
+                    if (players[i].hand.calc_total() == dealer.hand.calc_total())
                     {
-                        System.out.println(players[i].get_name() + " has tied against the house and pushes.");
+                        System.out.println(players[i].get_name() + " has tied against the house and pushes their bet of " + players[i].get_bet() + ".");
                         players[i].player_push();
-                    } else
+                    }
+                    if (players[i].hand.calc_total() < dealer.hand.calc_total())
                     {
                         System.out.println(players[i].get_name() + " has lost against the house.");
                         players[i].player_bust();
@@ -261,9 +279,14 @@ public class Blackjack
         {
             for (int i = 0; i < users; i++)
             {
-                players[i].player_win();
+                if (players[i].get_bank() > 0 && players[i].get_bet() > 0)
+                {
+                    System.out.println(players[i].get_name() + " has won against the house and won " + players[i].get_bet());
+                    players[i].player_win();
+                }
             }
-        } else
+        }
+        if (status.equals("win"))
         {
             System.out.println("The house wins.");
         }
@@ -275,7 +298,7 @@ public class Blackjack
         {
             if (players[i].get_bank() > 0)
             {
-                System.out.println(players[i].get_name() + " is showing " + players[i].show_hand() + ".");
+                System.out.println(players[i].get_name() + " is showing " + players[i].show_hand() +  " for a total of " + players[i].hand.calc_total() + ".");
             }
         }
     }
@@ -291,21 +314,23 @@ public class Blackjack
                 if (players[i].get_bank() - start_bank > 0)
                 {
                     balance = players[i].get_bank() - start_bank;
-                    System.out.println(players[i].get_name() + "has gained " + balance + "for a total of " + players[i].get_bank() + ".");
+                    System.out.println("So far " + players[i].get_name() + " has gained " + balance + " for a total of " + players[i].get_bank() + ".");
+                   //players[i].set_bank(balance);
                     System.out.println("");
                     players[i].hand.hand_reset();
                 }
-                if (start_bank - players[i].get_bank() < 150)
+                if (players[i].get_bank() - start_bank < 0)
                 {
                     balance = start_bank - players[i].get_bank();
-                    System.out.println(players[i].get_name() + " has lost " + balance + " with a remainder of " + players[i].get_bank() + ".");
+                    System.out.println("so far " + players[i].get_name() + " has lost " + balance + " with a remainder of " + players[i].get_bank() + ".");
+                    //players[i].set_bank(balance);
                     System.out.println("");
                     players[i].hand.hand_reset();
                 }
             }
             if (players[i].get_bank() == 0)
             {
-                System.out.println(players[i].get_name() + " has a bank of 0 and is removed from the game.");
+                System.out.println("So far " + players[i].get_name() + " has a bank of 0 and is removed from the game.");
                 System.out.println("");
                 players[i].hand.hand_reset();
                 players[i].remove_player();
@@ -346,6 +371,7 @@ public class Blackjack
 
     public boolean next_game()
     {
+        bust_count = 0;
         String play_again;
         boolean new_game = true;
 
@@ -355,7 +381,7 @@ public class Blackjack
         } else
         {
             System.out.println("");
-            System.out.println("Do you want to play another game? Yes or no?");
+            System.out.println("Do you want to play a game of Blackjack? Yes or no?");
             play_again = scan.next().toLowerCase();
 
             while (!(play_again.equals("yes") || play_again.equals("no")))

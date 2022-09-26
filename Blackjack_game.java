@@ -15,7 +15,7 @@ public class Blackjack_game
             game.blackjack_check();
             game.player_action();
             game.dealer_action();
-            game.showdown(game.dealer_action());
+            game.showdown();
             game.player_bank_status();
         }
         game.endgame();
