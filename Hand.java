@@ -7,7 +7,7 @@ public class Hand
     public int calc_total()
     {
         int total = 0;
-        for (int i = 0; i <= hand_count; i++)
+        for (int i = 0; i < hand_count; i++)
         {
             int card_value = hand[i].get_value();
             if (card_value > 10)

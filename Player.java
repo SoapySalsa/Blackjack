@@ -3,6 +3,7 @@ public class Player
     private String name;
     private int bank;
     private int bet;
+    Hand hand;
 
     Player()
     {
@@ -20,10 +21,43 @@ public class Player
         return name;
     }
 
+    public int get_bank()
+    {
+        return bank;
+    }
 
-//    public void set_bet(int bet)
-//    {
-//    }
+    public void set_bet(int bet)
+    {
+        bet = bet;
+    }
+
+    public int get_bet()
+    {
+       return bet;
+    }
+
+    public void add_card()
+    {
+        hand.add_card(Deck.playing_deck.pop());
+    }
+
+    public String get_hand()
+    {
+        return hand.toString();
+    }
+
+
+    public boolean player_blackjack_check()
+    {
+        if(hand.calc_total() == 21)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     public void player_win()
     {
         bank += bet;
@@ -47,13 +81,24 @@ public class Player
         bet = 0;
     }
 
-    public void clear_bet()
-    {
-        bet = 0;
-    }
+//    public void clear_bet()
+//    {
+//        bet = 0;
+//    }
 
     public void remove_player()
     {
         bank = -1;
     }
+
+    public void reset_bank()
+    {
+        bank = 150;
+    }
+
+//    public void clear_hand()
+//    {
+//        hand.hand_reset();
+//    }
+
 }

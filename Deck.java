@@ -11,19 +11,19 @@ public class Deck
     public Deck()
     {
         int placement = 0;
-        for (int i = 1; i < 14; i++)
+        for (int i = 0; i < 14; i++)
         {
             deck[placement++] = new Card(i, "of Spades");
         }
-        for (int i = 1; i < 14; i++)
+        for (int i = 0; i < 14; i++)
         {
             deck[placement++] = new Card(i, "of Diamonds");
         }
-        for (int i = 1; i < 14; i++)
+        for (int i = 0; i < 14; i++)
         {
             deck[placement++] = new Card(i, "of Hearts");
         }
-        for (int i = 1; i < 14; i++)
+        for (int i = 0; i < 14; i++)
         {
             deck[placement++] = new Card(i, "of Clubs");
         }
