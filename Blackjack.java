@@ -241,7 +241,13 @@ public class Blackjack
             System.out.println("The dealer is currently showing " + dealer.dealer_hand());
             dealer_status = dealer.dealer_turn();
 
-        } else
+        }
+
+        if (player_blackjack == users)
+        {
+            dealer_status = "lose";
+        }
+        else
         {
             dealer_status = "win";
         }
@@ -285,6 +291,10 @@ public class Blackjack
                     players[i].player_win();
                 }
             }
+        }
+        if (status.equals("lose"))
+        {
+            System.out.println("The house loses.");
         }
         if (status.equals("win"))
         {
@@ -405,13 +415,13 @@ public class Blackjack
         {
             if (players[i].get_bank() > 0)
             {
-                if (players[i].get_bank() - start_bank > 150)
+                if (players[i].get_bank() - start_bank > 0)
                 {
                     balance = players[i].get_bank() - start_bank;
                     System.out.println(players[i].get_name() + " ends the game with with winning " + balance + " for a total of " + players[i].get_bank() + ".");
                     System.out.println("");
                 }
-                if (start_bank - players[i].get_bank() < 150)
+                if (start_bank - players[i].get_bank() < 0)
                 {
                     balance = start_bank - players[i].get_bank();
                     System.out.println(players[i].get_name() + " ends the game losing " + balance + " with a remainder of " + players[i].get_bank() + ".");

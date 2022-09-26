@@ -10,16 +10,6 @@ public class Card
         this.suit = suit;
     }
 
-//    public String get_suit()
-//    {
-//        return this.suit;
-//    }
-//    public String get_value()
-//    {
-//        return this.suit;
-//    }
-
-
     public String toString()
     {
         return this.get_value() + " " + this.suit;
@@ -54,24 +44,4 @@ public class Card
         }
         return face_value;
     }
-
-//    public static int ace_check(Card hand[])
-//    {
-//        int check_total = 0;
-//        int ace_value = 1;
-//        for (int i = 0; i < hand.length; i++)
-//        {
-//            if (hand[i].get_value() == 1 && check_total + 11 < 22)
-//            {
-//                ace_value = 11;
-//            }
-//            check_total += hand[i].get_value();
-//        }
-//        return ace_value;
-//    }
-
-//    public boolean compare_value()
-//    {
-//
-//    }
 }
