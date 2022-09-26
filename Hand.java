@@ -1,27 +1,52 @@
 public class Hand
 {
     private Card[] hand = new Card[12];
-    private int hand_count;
+    private int hand_count = 0;
     Card current_hand;
 
     public int calc_total()
     {
         int total = 0;
+        int temp_total = 0;
         for (int i = 0; i < hand_count; i++)
         {
             int card_value = hand[i].get_value();
             if (card_value > 10)
             {
                 card_value = 10;
-            } else if (card_value == 1 && i < hand.length)
+            }
+            else if (card_value == 1 && i < hand_count)
             {
-                card_value = Card.ace_check(i, hand, total);
+                temp_total += 11 + total;
+                //card_value = Card.ace_check(hand);
+                for (int j = i + 1; j < hand_count; j++)
+                {
+                    temp_total += hand[j].get_value();
+                    if (temp_total <= 21 && j == hand_count)
+                    {
+                        card_value = 11;
+                    }
+                }
             }
             total += card_value;
         }
         return total;
     }
 
+//    public String get_card()
+//    {
+//        return hand[i].get_card_details();
+//    }
+
+    public String toString()
+    {
+        String hand_cards = "";
+        for (int i = 0; i < hand_count; i++)
+        {
+            hand_cards += hand[i].get_card_details() + ", ";
+        }
+     return hand_cards.substring(0, hand_cards.length() - 2);
+    }
     public void hand_reset()
     {
         hand_count = 0;

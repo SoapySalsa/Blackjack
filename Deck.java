@@ -1,35 +1,33 @@
-import java.util.ArrayDeque;
 import java.util.Random;
 import java.util.Stack;
 
 public class Deck
 {
     private Card[] deck = new Card[52];
-    public static Stack<Card> playing_deck;
-    //private Stack<Card> playing_deck;
+    public static Stack<Card> playing_deck = new Stack<>();
 
     public Deck()
     {
         int placement = 0;
-        for (int i = 0; i < 14; i++)
+        for (int i = 1; i < 14; i++)
         {
             deck[placement++] = new Card(i, "of Spades");
         }
-        for (int i = 0; i < 14; i++)
+        for (int i = 1; i < 14; i++)
         {
             deck[placement++] = new Card(i, "of Diamonds");
         }
-        for (int i = 0; i < 14; i++)
+        for (int i = 1; i < 14; i++)
         {
             deck[placement++] = new Card(i, "of Hearts");
         }
-        for (int i = 0; i < 14; i++)
+        for (int i = 1; i < 14; i++)
         {
             deck[placement++] = new Card(i, "of Clubs");
         }
     }
 
-    public void shuffle()
+    public Card[] shuffle()
     {
         Random ran = new Random();
         Card temp;
@@ -44,9 +42,10 @@ public class Deck
                 deck[new_spot] = temp;
             }
         }
+        return deck;
     }
 
-    public Stack new_deck()
+    public Stack new_deck(Card[] deck)
     {
         for (int i = 0; i < 52; i++)
         {
@@ -55,11 +54,13 @@ public class Deck
         return playing_deck;
     }
 
-//    public Stack<Card> get_deck()
+//    public String toString()
 //    {
-//        return playing_deck;
+//        String card = "";
+//        card = playing_deck.peek().get_card_details();
+//        return card;
 //    }
-//
+
 //    public Card get_card()
 //    {
 //        return playing_deck.pop();

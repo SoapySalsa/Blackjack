@@ -11,10 +11,11 @@ public class Blackjack_game
             game.dealer_deck();
             game.collect_bets();
             game.deal();
+            game.display_hand();
             game.blackjack_check();
             game.player_action();
-            game.display_hand();
             game.dealer_action();
+            game.showdown(game.dealer_action());
             game.player_bank_status();
         }
         game.endgame();

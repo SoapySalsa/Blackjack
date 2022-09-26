@@ -3,17 +3,17 @@ public class Player
     private String name;
     private int bank;
     private int bet;
-    Hand hand;
+   Hand hand;
 
     Player()
     {
         bank = 150;
-        Hand hand = new Hand();
+        hand = new Hand();
     }
 
-    public void set_name(String name)
+    public void set_name(String name1)
     {
-        name = name;
+        name = name1;
     }
 
     public String get_name()
@@ -26,9 +26,9 @@ public class Player
         return bank;
     }
 
-    public void set_bet(int bet)
+    public void set_bet(int new_bet)
     {
-        bet = bet;
+        bet = new_bet;
     }
 
     public int get_bet()
@@ -41,7 +41,7 @@ public class Player
         hand.add_card(Deck.playing_deck.pop());
     }
 
-    public String get_hand()
+    public String show_hand()
     {
         return hand.toString();
     }
