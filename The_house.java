@@ -59,13 +59,4 @@ public class The_house
           return false;
          }
     }
-
-
-//    public void dealer_bust()
-//    {
-//        if (hand.calc_total() > 21)
-//        {
-//            System.out.println("The Dealer busts.");
-//        }
-//    }
 }
