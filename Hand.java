@@ -2,7 +2,6 @@ public class Hand
 {
     private Card[] hand = new Card[12];
     private int hand_count = 0;
-    Card current_hand;
 
     public int calc_total()
     {
@@ -26,7 +25,7 @@ public class Hand
             if (hand[i].get_value() == 1 && hand_count > 2)
             {
                 temp_total = 11;
-                //card_value = Card.ace_check(hand);
+
                 for (int j = i + 1; j < hand_count; j++)
                 {
                     temp_total += hand[j].get_value();
