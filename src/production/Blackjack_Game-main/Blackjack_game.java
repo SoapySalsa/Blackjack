@@ -2,6 +2,7 @@ public class Blackjack_game
 {
     public static void main(String[] args)
     {
+        // creates the blackjack game
         Blackjack game = new Blackjack();
 
         game.create_game();
