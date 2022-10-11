@@ -39,7 +39,7 @@ public class Blackjack
         System.out.println("");
         System.out.println("The game continues until all players are removed or they decided to quit");
         System.out.println("");
-
+        
         System.out.println("How many people are playing today? (1-6)");
         while (users == 0 || users > 6)
         {
@@ -57,7 +57,7 @@ public class Blackjack
                 scan.next();
             }
         }
-        players = new Player[users];
+        players = new Player[users]; //Creates the player array based on the number of users that was read in
         name = scan.nextLine();
         for (int i = 0; i < users; i++)
         {
@@ -68,13 +68,14 @@ public class Blackjack
         }
     }
 
+    //creates and shuffles the deck array for the game
     public Stack dealer_deck()
     {
         Deck deck = new Deck();
         return deck.new_deck(deck.shuffle());
     }
 
-
+    //while the number of players with a bank above 0 is 1 or more bets are collected
     public void collect_bets()
     {
         int bet_amount = 0;
@@ -109,6 +110,7 @@ public class Blackjack
         }
     }
 
+    //displays each card that is delt to the player and only shows the last card delt to the dealer
     public void deal()
     {
         for (int i = 0; i < 2; i++)
@@ -132,6 +134,7 @@ public class Blackjack
         }
     }
 
+    // checks each player for blackjack and the dealer, if present win or lose conditions are used
     public int blackjack_check()
     {
         player_blackjack = 0;
@@ -170,6 +173,7 @@ public class Blackjack
         return player_blackjack;
     }
 
+    // cycles though each player asking for hit or stand then checks the player's total
     public int player_action()
     {
         String action = "";
@@ -235,6 +239,7 @@ public class Blackjack
         return bust_count;
     }
 
+    // based on the number of players left the dealer will take their turn. No players the dealer wins
     public void dealer_action()
     {
         if (bust_count < users && player_blackjack < users)
@@ -253,6 +258,7 @@ public class Blackjack
         }
     }
 
+    // remaining player hands are compared to the dealer's hand and then win/losr conditions are made
     public void showdown()
     {
         String status = dealer_status;
@@ -301,6 +307,7 @@ public class Blackjack
         }
     }
 
+    //displays the player's hand
     public void display_hand()
     {
         for (int i = 0; i < users; i++)
@@ -312,6 +319,7 @@ public class Blackjack
         }
     }
 
+    // prints the player's current bank and their current winnings
     public void player_bank_status()
     {
         int start_bank = 150;
@@ -358,6 +366,7 @@ public class Blackjack
         dealer.hand.hand_reset();
     }
 
+    // stops the game if no players are left
     public boolean force_stop()
     {
         boolean stop_flag = true;
@@ -382,6 +391,7 @@ public class Blackjack
         return stop_flag;
     }
 
+    // creates the new game loop
     public boolean next_game()
     {
         bust_count = 0;
@@ -410,6 +420,7 @@ public class Blackjack
         return new_game;
     }
 
+    // creates the end game read out
     public void endgame()
     {
         int start_bank = 150;
