@@ -3,6 +3,7 @@ public class Hand
     private Card[] hand = new Card[12];
     private int hand_count = 0;
 
+    // calculates the total for the hand and sets Ace value
     public int calc_total()
     {
         int card_value = 0;
